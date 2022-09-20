@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:portal_corp_v2/providers/usuraio_providers.dart';
 import 'package:provider/provider.dart';
@@ -41,45 +44,61 @@ bool checked = false;
 class _MyProfileState extends State<MyProfile> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+  final usuarioProvider =  Provider.of<Usuario_provider>(context);
+    
+    if(usuarioProvider.usuario.isNotEmpty) {
+      return Scaffold(
       //Barra superior
       appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 4, 170, 221),
           title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                GestureDetector(
+                SizedBox(
+                width:  MediaQuery.of(context).size.width * .3,
+                child: GestureDetector(
                     onTap: () {
-                      setState(() {
+                      // setState(() {
                         
-                      });
+                      // });
                     },
                     child: Row(
                       children: const <Widget>[
                         Icon(
                           Icons.arrow_back,
-                          size: 40,
+                          size: 35,
                         ),
                       ],
                     )),
-                Text(
+                ),
+                SizedBox(
+                width:  MediaQuery.of(context).size.width * .3,
+                child:Text(
                   widget.title,
                   textAlign: TextAlign.center,
                 ),
-                GestureDetector(
+                ),
+                SizedBox(
+                width:  MediaQuery.of(context).size.width * .3,
+                child:  GestureDetector(
                     onTap: () {
                       setState(() {
                         checked = !checked;
                       });
                     },
-                    child: Visibility(
+                    child:Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                    Visibility(
                         visible: !checked,
                         child: Row(
                           children: const <Widget>[
-                            Icon(Icons.edit),
+                            Icon(Icons.edit,size: 20,),
                             Text("Editar")
                           ],
-                        )))
+                        ))]
+                    ))          
+                )              
               ])),
 
       //Contenido de la aplicacion
@@ -87,7 +106,7 @@ class _MyProfileState extends State<MyProfile> {
         //mainAxisAlignment: MainAxisAlignment.start,
         // ignore: prefer_const_constructors
         children: <Widget>[
-          miUsuario(context),
+          miUsuario(context,usuarioProvider.usuario[0].prettyname,usuarioProvider.usuario[0].puDescrip,usuarioProvider.usuario[0].tbElement,usuarioProvider.usuario[0].imBlob),
           Column(children: <Widget>[
             Card(
                 shape: RoundedRectangleBorder(
@@ -119,6 +138,7 @@ class _MyProfileState extends State<MyProfile> {
                       //     ]),
                       TextFormField(
                         enabled: checked,
+                        initialValue: usuarioProvider.usuario[0].extension.toString(),
                         decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText: "EXT.",
@@ -126,6 +146,7 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                       TextFormField(
                         enabled: checked,
+                        initialValue: usuarioProvider.usuario[0].marcaRapida.toString(),
                         decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText: "Marcación Rápida",
@@ -133,6 +154,7 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                       TextFormField(
                         enabled: checked,
+                         initialValue: usuarioProvider.usuario[0].email,
                         decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText: "Email",
@@ -140,6 +162,7 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                       TextFormField(
                         enabled: checked,
+                         initialValue: usuarioProvider.usuario[0].telTrabajo,
                         decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText: "Celular de trabajo",
@@ -147,6 +170,7 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                       TextFormField(
                         enabled: checked,
+                        initialValue: usuarioProvider.usuario[0].celPersonal,
                         decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText: "Celular personal",
@@ -155,6 +179,7 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                       TextFormField(
                         enabled: checked,
+                         initialValue: usuarioProvider.usuario[0].telPersonal,
                         decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText: "Teléfono de casa",
@@ -214,13 +239,21 @@ class _MyProfileState extends State<MyProfile> {
         ],
       ),
     );
+    } else {
+      return Scaffold(
+      backgroundColor: Colors.blue.shade600,
+      body: const Center(child: 
+        CircularProgressIndicator(
+            color: Colors.white,
+        )
+      ),
+    );
+    }
+  
   }
 }
 
-Card miUsuario(context) {
-  final usuarioProvider = Provider.of<Usuario_provider>(context);
-  usuarioProvider.getUsuario();
-
+Card miUsuario(context,nombre,puesto,depto,imagen) {
   return Card(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
     margin: const EdgeInsets.all(10),
@@ -234,9 +267,9 @@ Card miUsuario(context) {
           padding: const EdgeInsets.all(0),
           child: Center(
             child: Container(
-              child: const CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTUg81xUWPoaVpYNBQQqr5fQOkFUUI1uTkYA&usqp=CAU'),
+              child:  CircleAvatar(
+                backgroundImage: MemoryImage(Uint8List.fromList(imagen)),
+                //NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTUg81xUWPoaVpYNBQQqr5fQOkFUUI1uTkYA&usqp=CAU'),
                 radius: 70,
               ),
             ),
@@ -249,15 +282,15 @@ Card miUsuario(context) {
             Container(
                 width: MediaQuery.of(context).size.width * .5,
                 margin: const EdgeInsets.all(5),
-                child: textos("Nombre:", "Axel Reyes Morales")),
+                child: textos("Nombre:", nombre)),
             Container(
                 width: MediaQuery.of(context).size.width * .5,
                 margin: const EdgeInsets.all(5),
-                child: textos("Puesto:", "Programador Jr")),
+                child: textos("Puesto:", puesto)),
             Container(
                 width: MediaQuery.of(context).size.width * .5,
                 margin: const EdgeInsets.all(5),
-                child: textos("Depto:", "Administración de ERP"))
+                child: textos("Departamento:", depto))
           ]),
         ),
       ],
@@ -276,7 +309,7 @@ Column textos(String titulo, String contenido) {
       ),
       textAlign: TextAlign.left,
     )),
-    Container(child: Text((contenido), style: const TextStyle(fontSize: 16)))
+    Container(child: Text((contenido), style: const TextStyle(fontSize: 16),textAlign: TextAlign.justify,))
   ]);
 }
 

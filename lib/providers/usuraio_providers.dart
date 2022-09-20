@@ -9,22 +9,20 @@ import 'package:http/http.dart' as http;
 class Usuario_provider with ChangeNotifier {
   List<Usuario> usuario = [];
 
+  Usuario_provider(){
+    getUsuario();
+  }
+
   getUsuario() async{
     //const url1 = 'http://10.0.2.2:8000/api/hola';
     //const url1 = 'http://192.168.18.122:8000/api/perfil';
 
     //const url = "https://jsonplaceholder.typicode.com/posts";
     
-    final resp = await http.get(Uri.parse("$url/api/hola"),
-    headers: {
-      "Access-Control-Allow-Origin":"*",
-      "Access-Control-Allow-Credentials":"true",
-      'Content-type':'application/json',
-      'Accept':'application/json'
-    });
-
+    final resp = await http.get(Uri.parse("$url/api/perfil/$user"));
     final response = usuarioFromJson(resp.body);
     usuario = response;
     notifyListeners();
+    
   }
 }
