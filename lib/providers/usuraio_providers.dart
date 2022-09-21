@@ -10,10 +10,10 @@ class Usuario_provider with ChangeNotifier {
   List<Usuario> usuario = [];
 
   Usuario_provider(){
-    getUsuario();
+    getUsuario(user);
   }
 
-  getUsuario() async{
+  getUsuario(int user) async{
     //const url1 = 'http://10.0.2.2:8000/api/hola';
     //const url1 = 'http://192.168.18.122:8000/api/perfil';
 

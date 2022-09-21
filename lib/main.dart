@@ -1,10 +1,9 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
+import 'package:portal_corp_v2/models/Usuario.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:portal_corp_v2/providers/usuraio_providers.dart';
 import 'package:provider/provider.dart';
-//import 'package:portal_corp_v2/constants.dart';
+import 'package:portal_corp_v2/constants.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +15,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+   
     return MultiProvider(
         providers: [ChangeNotifierProvider(create: (_) => Usuario_provider())],
         child: MaterialApp(
@@ -32,25 +32,58 @@ class MyApp extends StatelessWidget {
 
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key, required this.title});
-
   final String title;
+
 
   @override
   State<MyProfile> createState() => _MyProfileState();
 }
 
 bool checked = false;
-
+bool firsttime = true;
 class _MyProfileState extends State<MyProfile> {
+  Usuario_provider? usuarioProvider;
+  late TextEditingController txtMarcaR;
+  late TextEditingController txtExt;
+  late TextEditingController txtCel;
+  late TextEditingController txtTrabajo;
+  late TextEditingController txtCasa;
+  late TextEditingController txtEmail;
+
+
+void getInicial (){ 
+  if(firsttime){
+    txtMarcaR =  TextEditingController(text: usuarioProvider!.usuario[0].marcaRapida.toString());
+    txtExt = TextEditingController(text: usuarioProvider!.usuario[0].extension.toString());
+    txtCel = TextEditingController(text: usuarioProvider!.usuario[0].celPersonal.toString());
+    txtTrabajo = TextEditingController(text: usuarioProvider!.usuario[0].telTrabajo.toString());
+    txtCasa = TextEditingController(text: usuarioProvider!.usuario[0].telPersonal.toString());
+    txtEmail = TextEditingController(text: usuarioProvider!.usuario[0].email.toString());
+    firsttime = false;
+    }  
+}
+
+void getCancel (){ 
+
+    txtMarcaR =  TextEditingController(text: usuarioProvider!.usuario[0].marcaRapida.toString());
+    txtExt = TextEditingController(text: usuarioProvider!.usuario[0].extension.toString());
+    txtCel = TextEditingController(text: usuarioProvider!.usuario[0].celPersonal.toString());
+    txtTrabajo = TextEditingController(text: usuarioProvider!.usuario[0].telTrabajo.toString());
+    txtCasa = TextEditingController(text: usuarioProvider!.usuario[0].telPersonal.toString());
+    txtEmail = TextEditingController(text: usuarioProvider!.usuario[0].email.toString());
+    firsttime = false;
+}
+
   @override
-  Widget build(BuildContext context) {
-  final usuarioProvider =  Provider.of<Usuario_provider>(context);
-    
-    if(usuarioProvider.usuario.isNotEmpty) {
+  Widget build(BuildContext context) { 
+    usuarioProvider =  Provider.of<Usuario_provider>(context);
+      
+    if(usuarioProvider!.usuario.isNotEmpty) {
+      getInicial(); 
       return Scaffold(
       //Barra superior
       appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 4, 170, 221),
+          backgroundColor: Colors.blue.shade600,
           title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -106,7 +139,7 @@ class _MyProfileState extends State<MyProfile> {
         //mainAxisAlignment: MainAxisAlignment.start,
         // ignore: prefer_const_constructors
         children: <Widget>[
-          miUsuario(context,usuarioProvider.usuario[0].prettyname,usuarioProvider.usuario[0].puDescrip,usuarioProvider.usuario[0].tbElement,usuarioProvider.usuario[0].imBlob),
+          miUsuario(context,usuarioProvider?.usuario[0].prettyname,usuarioProvider?.usuario[0].puDescrip,usuarioProvider?.usuario[0].tbElement,usuarioProvider?.usuario[0].imBlob),
           Column(children: <Widget>[
             Card(
                 shape: RoundedRectangleBorder(
@@ -138,15 +171,25 @@ class _MyProfileState extends State<MyProfile> {
                       //     ]),
                       TextFormField(
                         enabled: checked,
-                        initialValue: usuarioProvider.usuario[0].extension.toString(),
+                        maxLength: 5,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        controller: txtExt,
                         decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
-                            labelText: "EXT.",
+                            labelText: "EXT.",                           
                             icon: Icon(Icons.fax, color: Colors.black)),
                       ),
                       TextFormField(
                         enabled: checked,
-                        initialValue: usuarioProvider.usuario[0].marcaRapida.toString(),
+                        keyboardType: TextInputType.number,
+                        maxLength: 5,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        controller: txtMarcaR,
                         decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText: "Marcación Rápida",
@@ -154,7 +197,8 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                       TextFormField(
                         enabled: checked,
-                         initialValue: usuarioProvider.usuario[0].email,
+                         maxLength: 50,
+                        controller: txtEmail,
                         decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText: "Email",
@@ -162,7 +206,12 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                       TextFormField(
                         enabled: checked,
-                         initialValue: usuarioProvider.usuario[0].telTrabajo,
+                         keyboardType: TextInputType.number,
+                         maxLength: 10,
+                         inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        controller: txtTrabajo,
                         decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText: "Celular de trabajo",
@@ -170,7 +219,12 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                       TextFormField(
                         enabled: checked,
-                        initialValue: usuarioProvider.usuario[0].celPersonal,
+                        keyboardType: TextInputType.number,
+                          maxLength: 10,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        controller: txtCel,
                         decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText: "Celular personal",
@@ -179,7 +233,12 @@ class _MyProfileState extends State<MyProfile> {
                       ),
                       TextFormField(
                         enabled: checked,
-                         initialValue: usuarioProvider.usuario[0].telPersonal,
+                         keyboardType: TextInputType.number,
+                           maxLength: 10,
+                         inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        controller: txtCasa,
                         decoration: const InputDecoration(
                             border: UnderlineInputBorder(),
                             labelText: "Teléfono de casa",
@@ -199,6 +258,7 @@ class _MyProfileState extends State<MyProfile> {
                                 onPressed: () {
                                   setState(() {
                                     checked = !checked;
+                                    getCancel();
                                   });
                                 },
                                 icon: const Icon(
@@ -219,6 +279,14 @@ class _MyProfileState extends State<MyProfile> {
                             onPressed: () {
                               setState(() {
                                 checked = !checked;
+                                usuarioProvider?.getUsuario(user2);                               
+                                showDialog(context: context, builder: (context) {
+                                     return AlertDialog(
+                                      content: Text(
+                                        txtCasa.text
+                                      ),
+                                      );
+                                });
                               });
                             },
                             icon: const Icon(
