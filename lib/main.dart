@@ -1,4 +1,3 @@
-import 'package:portal_corp_v2/models/Usuario.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:portal_corp_v2/providers/usuraio_providers.dart';
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
    
     return MultiProvider(
-        providers: [ChangeNotifierProvider(create: (_) => Usuario_provider())],
+        providers: [ChangeNotifierProvider(create: (_) => UsuarioProvider())],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
@@ -41,8 +40,11 @@ class MyProfile extends StatefulWidget {
 
 bool checked = false;
 bool firsttime = true;
+bool cambio = true;
+
+
 class _MyProfileState extends State<MyProfile> {
-  Usuario_provider? usuarioProvider;
+  UsuarioProvider? usuarioProvider;
   late TextEditingController txtMarcaR;
   late TextEditingController txtExt;
   late TextEditingController txtCel;
@@ -64,22 +66,34 @@ void getInicial (){
 }
 
 void getCancel (){ 
+    txtMarcaR.text =   usuarioProvider!.usuario[0].marcaRapida.toString();
+    txtExt.text = usuarioProvider!.usuario[0].extension.toString();
+    txtCel.text =  usuarioProvider!.usuario[0].celPersonal.toString();
+    txtTrabajo.text =  usuarioProvider!.usuario[0].telTrabajo.toString();
+    txtCasa.text =  usuarioProvider!.usuario[0].telPersonal.toString();
+    txtEmail.text =  usuarioProvider!.usuario[0].email.toString();  
+}
 
-    txtMarcaR =  TextEditingController(text: usuarioProvider!.usuario[0].marcaRapida.toString());
-    txtExt = TextEditingController(text: usuarioProvider!.usuario[0].extension.toString());
-    txtCel = TextEditingController(text: usuarioProvider!.usuario[0].celPersonal.toString());
-    txtTrabajo = TextEditingController(text: usuarioProvider!.usuario[0].telTrabajo.toString());
-    txtCasa = TextEditingController(text: usuarioProvider!.usuario[0].telPersonal.toString());
-    txtEmail = TextEditingController(text: usuarioProvider!.usuario[0].email.toString());
-    firsttime = false;
+
+
+@override
+void dispose(){
+  super.dispose();
+  getCancel();
 }
 
   @override
   Widget build(BuildContext context) { 
-    usuarioProvider =  Provider.of<Usuario_provider>(context);
+    usuarioProvider =  Provider.of<UsuarioProvider>(context);
       
     if(usuarioProvider!.usuario.isNotEmpty) {
+      if(firsttime){
       getInicial(); 
+      }
+      
+      if(cambio){
+        getCancel(); 
+      }
       return Scaffold(
       //Barra superior
       appBar: AppBar(
@@ -135,7 +149,8 @@ void getCancel (){
               ])),
 
       //Contenido de la aplicacion
-      body: ListView(
+      body: 
+      ListView(
         //mainAxisAlignment: MainAxisAlignment.start,
         // ignore: prefer_const_constructors
         children: <Widget>[
@@ -149,26 +164,7 @@ void getCancel (){
                 child: Container(
                     margin: const EdgeInsets.all(20),
                     padding: const EdgeInsets.all(0),
-                    child: Column(children: <Widget>[
-                      // Row(
-                      //     mainAxisAlignment: MainAxisAlignment.end,
-                      //     children: <Widget>[
-                      //       // Checkbox(
-                      //       //   value: checked,
-                      //       //   onChanged: (value) {
-                      //       //     setState(() {
-                      //       //       checked = value!;
-                      //       //     });
-                      //       //   },
-                      //       // ),
-                      //       GestureDetector(
-                      //           onTap: () {
-                      //             setState(() {
-                      //               checked = !checked;
-                      //             });
-                      //           },
-                      //           child: const Text("Editar")),
-                      //     ]),
+                    child: Column(children: <Widget>[                     
                       TextFormField(
                         enabled: checked,
                         maxLength: 5,
@@ -181,6 +177,10 @@ void getCancel (){
                             border: UnderlineInputBorder(),
                             labelText: "EXT.",                           
                             icon: Icon(Icons.fax, color: Colors.black)),
+                       onEditingComplete: () {
+                          FocusScope.of(context).unfocus();
+                          cambio = false;                        
+                        }, 
                       ),
                       TextFormField(
                         enabled: checked,
@@ -194,6 +194,10 @@ void getCancel (){
                             border: UnderlineInputBorder(),
                             labelText: "Marcación Rápida",
                             icon: Icon(Icons.call_made, color: Colors.black)),
+                       onEditingComplete: () {
+                          FocusScope.of(context).unfocus();
+                          cambio = false;                        
+                        }, 
                       ),
                       TextFormField(
                         enabled: checked,
@@ -203,6 +207,10 @@ void getCancel (){
                             border: UnderlineInputBorder(),
                             labelText: "Email",
                             icon: Icon(Icons.email, color: Colors.black)),
+                       onEditingComplete: () {
+                          FocusScope.of(context).unfocus();
+                          cambio = false;                        
+                        }, 
                       ),
                       TextFormField(
                         enabled: checked,
@@ -216,6 +224,10 @@ void getCancel (){
                             border: UnderlineInputBorder(),
                             labelText: "Celular de trabajo",
                             icon: Icon(Icons.call, color: Colors.black)),
+                       onEditingComplete: () {
+                          FocusScope.of(context).unfocus();
+                          cambio = false;                        
+                        }, 
                       ),
                       TextFormField(
                         enabled: checked,
@@ -230,6 +242,10 @@ void getCancel (){
                             labelText: "Celular personal",
                             icon:
                                 Icon(Icons.phone_android, color: Colors.black)),
+                       onEditingComplete: () {
+                          FocusScope.of(context).unfocus();
+                          cambio = false;                        
+                        }, 
                       ),
                       TextFormField(
                         enabled: checked,
@@ -243,6 +259,10 @@ void getCancel (){
                             border: UnderlineInputBorder(),
                             labelText: "Teléfono de casa",
                             icon: Icon(Icons.house, color: Colors.black)),
+                        onEditingComplete: () {
+                          FocusScope.of(context).unfocus();
+                          cambio = false;                        
+                        },                     
                       ),
                     ]))),
             Padding(
@@ -257,8 +277,8 @@ void getCancel (){
                             child: OutlinedButton.icon(
                                 onPressed: () {
                                   setState(() {
-                                    checked = !checked;
-                                    getCancel();
+                                    checked = !checked;     
+                                    cambio = true;                             
                                   });
                                 },
                                 icon: const Icon(
@@ -279,13 +299,17 @@ void getCancel (){
                             onPressed: () {
                               setState(() {
                                 checked = !checked;
-                                usuarioProvider?.getUsuario(user2);                               
+                                //Aqui debe ir el post
+                                usuarioProvider?.getUsuario(user2); 
+                                cambio = true;                                                                       
                                 showDialog(context: context, builder: (context) {
                                      return AlertDialog(
                                       content: Text(
-                                        txtCasa.text
+                                       "Ext: ${txtExt.text} \nMarcacion Rapida: ${txtMarcaR.text} \nEmail: ${txtEmail.text} \nTrabajo: ${txtTrabajo.text} \ncelular: ${txtCel.text} \nCasa: ${txtCasa.text}"
                                       ),
-                                      );
+                                      
+                                      );  
+                                       
                                 });
                               });
                             },
@@ -368,16 +392,15 @@ Card miUsuario(context,nombre,puesto,depto,imagen) {
 
 Column textos(String titulo, String contenido) {
   return Column(children: <Widget>[
-    Container(
-        child: Text(
+    Text(
       (titulo),
       style: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
       ),
       textAlign: TextAlign.left,
-    )),
-    Container(child: Text((contenido), style: const TextStyle(fontSize: 16),textAlign: TextAlign.justify,))
+    ),
+    Text((contenido), style: const TextStyle(fontSize: 16),textAlign: TextAlign.justify,)
   ]);
 }
 

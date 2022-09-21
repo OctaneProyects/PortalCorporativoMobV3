@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:portal_corp_v2/constants.dart';
-import 'package:portal_corp_v2/models/Usuario.dart';
+import 'package:portal_corp_v2/models/usuario.dart';
 import 'package:http/http.dart' as http;
 
  const urlapi = url;
 
-class Usuario_provider with ChangeNotifier {
+class UsuarioProvider with ChangeNotifier {
   List<Usuario> usuario = [];
 
-  Usuario_provider(){
+  UsuarioProvider(){
     getUsuario(user);
   }
 
@@ -19,10 +19,13 @@ class Usuario_provider with ChangeNotifier {
 
     //const url = "https://jsonplaceholder.typicode.com/posts";
     
-    final resp = await http.get(Uri.parse("$url/api/perfil/$user"));
+    final resp =  await http.get(Uri.parse("$url/api/perfil/$user"));
     final response = usuarioFromJson(resp.body);
     usuario = response;
     notifyListeners();
     
   }
+  
+ 
+  
 }
