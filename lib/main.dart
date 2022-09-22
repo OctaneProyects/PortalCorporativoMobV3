@@ -405,6 +405,7 @@ void getImage(context) {
               ),
               InkWell(
                 onTap: () {
+                  usuarioProvider?.postActualizaInfo(1,"23432","123");
                   Navigator.of(context).pop();
                 },
                 child: Container(
@@ -441,7 +442,8 @@ Future selImage(opc, context) async {
   
 
   if (pickedfile != null) {  
-    imagenfile = File(pickedfile!.path); 
+    imagenfile = File(pickedfile.path); 
+    //Aqui debe ir el post de la imagen
     usuarioProvider!.getUsuario(user);
      Navigator.of(context).pop();
     showDialog(

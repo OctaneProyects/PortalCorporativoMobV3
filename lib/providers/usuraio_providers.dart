@@ -25,6 +25,19 @@ class UsuarioProvider with ChangeNotifier {
     notifyListeners();
     
   }
+
+  postActualizaInfo(int? user1,String? atributo, String? valor) async{
+    user1 = user;
+    atributo = "Ext";
+    valor = "123";
+    final resp = await http.post(Uri.parse("$url/api/actualiza/"),body: {
+      "Id":user1.toString(),
+      "Atributo":atributo,
+      "Valor":valor
+    });
+    
+    print(resp.body);
+  }
   
  
   
