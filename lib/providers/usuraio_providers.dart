@@ -9,8 +9,8 @@ import 'package:http/http.dart' as http;
 class UsuarioProvider with ChangeNotifier {
   List<Usuario> usuario = [];
 
-  UsuarioProvider(){
-    getUsuario(user);
+  UsuarioProvider(int noemp){
+    getUsuario(noemp);
   }
 
   getUsuario(int user) async{
@@ -27,16 +27,12 @@ class UsuarioProvider with ChangeNotifier {
   }
 
   postActualizaInfo(int? user1,String? atributo, String? valor) async{
-    user1 = user;
-    atributo = "Ext";
-    valor = "123";
+   
     final resp = await http.post(Uri.parse("$url/api/actualiza/"),body: {
       "Id":user1.toString(),
       "Atributo":atributo,
       "Valor":valor
     });
-    
-    print(resp.body);
   }
   
  

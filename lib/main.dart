@@ -7,32 +7,36 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Perfil(noemp: 952686));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Perfil extends StatelessWidget {
+  const Perfil({super.key, required this.noemp});
 
+  final int noemp;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [ChangeNotifierProvider(create: (_) => UsuarioProvider())],
+        providers: [
+          ChangeNotifierProvider(create: (_) => UsuarioProvider(noemp))
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
+          title: 'Perfil',
           theme: ThemeData(
             primarySwatch: Colors.blueGrey,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: const MyProfile(title: 'Perfil'),
+          home: MyProfile(title: 'Perfil', user: noemp),
         ));
   }
 }
 
 class MyProfile extends StatefulWidget {
-  const MyProfile({super.key, required this.title});
+  const MyProfile({super.key, required this.title, required this.user});
   final String title;
+  final int user;
 
   @override
   State<MyProfile> createState() => _MyProfileState();
@@ -44,6 +48,12 @@ bool cambio = false;
 File? imagenfile;
 final picker = ImagePicker();
 UsuarioProvider? usuarioProvider;
+String marcarAnt = "";
+String extAnt = "";
+String celAnt = "";
+String trabajoAnt = "";
+String casaAnt = "";
+String emailAnt = "";
 
 class _MyProfileState extends State<MyProfile> {
   late TextEditingController txtMarcaR;
@@ -54,6 +64,13 @@ class _MyProfileState extends State<MyProfile> {
   late TextEditingController txtEmail;
 
   void getInicial() {
+    marcarAnt = usuarioProvider!.usuario[0].marcaRapida.toString();
+    extAnt = usuarioProvider!.usuario[0].extension.toString();
+    celAnt = usuarioProvider!.usuario[0].celPersonal.toString();
+    trabajoAnt = usuarioProvider!.usuario[0].telTrabajo.toString();
+    casaAnt = usuarioProvider!.usuario[0].telPersonal.toString();
+    emailAnt = usuarioProvider!.usuario[0].telTrabajo.toString();
+
     if (firsttime) {
       txtMarcaR = TextEditingController(
           text: usuarioProvider!.usuario[0].marcaRapida.toString());
@@ -68,12 +85,18 @@ class _MyProfileState extends State<MyProfile> {
       txtEmail = TextEditingController(
           text: usuarioProvider!.usuario[0].email.toString());
 
-
       firsttime = false;
     }
   }
 
   void getCancel() {
+    marcarAnt = usuarioProvider!.usuario[0].marcaRapida.toString();
+    extAnt = usuarioProvider!.usuario[0].extension.toString();
+    celAnt = usuarioProvider!.usuario[0].celPersonal.toString();
+    trabajoAnt = usuarioProvider!.usuario[0].telTrabajo.toString();
+    casaAnt = usuarioProvider!.usuario[0].telPersonal.toString();
+    emailAnt = usuarioProvider!.usuario[0].telTrabajo.toString();
+
     txtMarcaR.text = usuarioProvider!.usuario[0].marcaRapida.toString();
     txtExt.text = usuarioProvider!.usuario[0].extension.toString();
     txtCel.text = usuarioProvider!.usuario[0].celPersonal.toString();
@@ -81,7 +104,6 @@ class _MyProfileState extends State<MyProfile> {
     txtCasa.text = usuarioProvider!.usuario[0].telPersonal.toString();
     txtEmail.text = usuarioProvider!.usuario[0].email.toString();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +184,8 @@ class _MyProfileState extends State<MyProfile> {
                 usuarioProvider?.usuario[0].prettyname,
                 usuarioProvider?.usuario[0].puDescrip,
                 usuarioProvider?.usuario[0].tbElement,
-                usuarioProvider?.usuario[0].imBlob),
+                usuarioProvider?.usuario[0].imBlob,
+                widget.user),
             Column(children: <Widget>[
               Card(
                   shape: RoundedRectangleBorder(
@@ -308,15 +331,52 @@ class _MyProfileState extends State<MyProfile> {
                                 setState(() {
                                   checked = !checked;
                                   //Aqui debe ir el post
-                                  usuarioProvider?.getUsuario(user2);
+                                  if (txtExt.text != extAnt) {
+                                    usuarioProvider?.postActualizaInfo(
+                                        widget.user, "Ext", txtExt.text);
+                                  }
+                                  if (txtCasa.text != casaAnt) {
+                                    usuarioProvider?.postActualizaInfo(
+                                        widget.user, "TelPers", txtCasa.text);
+                                  }
+                                  if (txtEmail.text != emailAnt) {
+                                    usuarioProvider?.postActualizaInfo(
+                                        widget.user, "Email", txtEmail.text);
+                                  }
+                                  if (txtCel.text != celAnt) {
+                                    usuarioProvider?.postActualizaInfo(
+                                        widget.user, "CelPers", txtCel.text);
+                                  }
+
+                                  if (txtMarcaR.text != marcarAnt) {
+                                    usuarioProvider?.postActualizaInfo(
+                                        widget.user, "MR", txtMarcaR.text);
+                                  }
+
+                                  if (txtTrabajo.text != trabajoAnt) {
+                                    usuarioProvider?.postActualizaInfo(
+                                        widget.user, "TelTrab", txtTrabajo.text);
+                                  }
+                                  usuarioProvider!.getUsuario(widget.user);
+
                                   cambio = true;
                                   showDialog(
                                       context: context,
                                       builder: (context) {
                                         return AlertDialog(
-                                          content: Text(
-                                              "Ext: ${txtExt.text} \nMarcacion Rapida: ${txtMarcaR.text} \nEmail: ${txtEmail.text} \nTrabajo: ${txtTrabajo.text} \ncelular: ${txtCel.text} \nCasa: ${txtCasa.text}"),
-                                        );
+                                            content: Row(
+                                          children: const <Widget>[
+                                            Text(
+                                              "Datos Guardados Correctamente ",
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                              size: 30,
+                                            )
+                                          ],
+                                        ));
                                       });
                                 });
                               },
@@ -350,7 +410,7 @@ class _MyProfileState extends State<MyProfile> {
   }
 }
 
-void getImage(context) {
+void getImage(context, noemp) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -361,7 +421,7 @@ void getImage(context) {
             children: <Widget>[
               InkWell(
                 onTap: () {
-                  selImage(1, context);
+                  selImage(1, context, noemp);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(20),
@@ -383,7 +443,7 @@ void getImage(context) {
               ),
               InkWell(
                 onTap: () {
-                  selImage(2, context);
+                  selImage(2, context, noemp);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(20),
@@ -405,7 +465,6 @@ void getImage(context) {
               ),
               InkWell(
                 onTap: () {
-                  usuarioProvider?.postActualizaInfo(1,"23432","123");
                   Navigator.of(context).pop();
                 },
                 child: Container(
@@ -430,7 +489,7 @@ void getImage(context) {
       });
 }
 
-Future selImage(opc, context) async {
+Future selImage(opc, context, noemp) async {
   XFile? pickedfile;
 
   if (opc == 1) {
@@ -439,22 +498,28 @@ Future selImage(opc, context) async {
     pickedfile = await picker.pickImage(source: ImageSource.gallery);
   }
 
-  
-
-  if (pickedfile != null) {  
-    imagenfile = File(pickedfile.path); 
+  if (pickedfile != null) {
+    imagenfile = File(pickedfile.path);
     //Aqui debe ir el post de la imagen
-    usuarioProvider!.getUsuario(user);
-     Navigator.of(context).pop();
+    usuarioProvider!.getUsuario(noemp);
+    Navigator.of(context).pop();
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            content: Row(children: const <Widget>[           
-              Text("Cambio de imagen correcto ", style: TextStyle(fontSize: 18),),
-              Icon(Icons.check,color: Colors.green,size: 30,)
-            ],)
-          );
+              content: Row(
+            children: const <Widget>[
+              Text(
+                "Cambio de imagen correcto ",
+                style: TextStyle(fontSize: 18),
+              ),
+              Icon(
+                Icons.check,
+                color: Colors.green,
+                size: 30,
+              )
+            ],
+          ));
         });
     print("Con Foto");
   } else {
@@ -462,15 +527,13 @@ Future selImage(opc, context) async {
   }
 }
 
-Card miUsuario(context, nombre, puesto, depto, imagen) {
-Uint8List? imagennew;
+Card miUsuario(context, nombre, puesto, depto, imagen, noemp) {
+  Uint8List? imagennew;
 
-try {
-  imagennew = imagenfile?.readAsBytes() as Uint8List;
+  try {
+    imagennew = imagenfile?.readAsBytes() as Uint8List;
 // ignore: empty_catches
-} catch (e) {
-  
-}
+  } catch (e) {}
 
   return Card(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -488,14 +551,16 @@ try {
               alignment: Alignment.bottomRight,
               children: <Widget>[
                 CircleAvatar(
-                  backgroundImage:  imagenfile == null ? MemoryImage(Uint8List.fromList(imagen)): MemoryImage(imagenfile!.readAsBytesSync()),
+                  backgroundImage: imagenfile == null
+                      ? MemoryImage(Uint8List.fromList(imagen))
+                      : MemoryImage(imagenfile!.readAsBytesSync()),
                   //NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTUg81xUWPoaVpYNBQQqr5fQOkFUUI1uTkYA&usqp=CAU'),
                   radius: 70,
                 ),
                 GestureDetector(
                     onTap: () {
                       // setState(() {
-                      getImage(context);
+                      getImage(context, noemp);
                       // });
                     },
                     child: Container(
