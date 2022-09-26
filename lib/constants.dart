@@ -6,6 +6,8 @@ const kPrimaryColor = Color.fromARGB(255, 66, 243, 234);
 const url = 'http://192.168.18.122:8080';
 const urlcorpo = 'http://10.1.9.82:8080';
 
+const urlFinal = 'https://portal.grupoeco.com.mx/APIPortalCorporativo';
+
 //ApiPortalCorporativo
 // const url2 = 'http://192.168.18.122:8080';
 // const urlcorpo2 = 'http://10.1.9.82:8080';

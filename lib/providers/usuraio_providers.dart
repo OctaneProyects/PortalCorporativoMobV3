@@ -22,7 +22,7 @@ class UsuarioProvider with ChangeNotifier {
 
     //const url = "https://jsonplaceholder.typicode.com/posts";
     
-    final resp =  await http.get(Uri.parse("$url/api/perfil/$user"));
+    final resp =  await http.get(Uri.parse("$urlFinal/api/perfil/$user"));
     final response = usuarioFromJson(resp.body);
     usuario = response;
     notifyListeners();
@@ -31,7 +31,7 @@ class UsuarioProvider with ChangeNotifier {
 
   postActualizaInfo(int? user1,String? atributo, String? valor) async{
    
-    final resp = await http.post(Uri.parse("$url/api/actualiza/"),body: {
+    final resp = await http.post(Uri.parse("$urlFinal/api/actualiza/"),body: {
       "Id":user1.toString(),
       "Atributo":atributo,
       "Valor":valor
@@ -42,7 +42,7 @@ class UsuarioProvider with ChangeNotifier {
     
     String imagen64 = base64.encode(imagen);
 
-    final resp = await http.post(Uri.parse("$url/api/img/"),body:  {
+    final resp = await http.post(Uri.parse("$urlFinal/api/img/"),body:  {
       "Id":user1.toString(),
       "Img":imagen64
     }
