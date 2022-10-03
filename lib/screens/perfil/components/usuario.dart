@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'perfil.dart';
+import '../perfil.dart';
 
 class MyUser extends StatefulWidget {
   MyUser({super.key, 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:portal_corp_v2/providers/usuraio_providers.dart';
-import 'package:portal_corp_v2/screens/home/components/usuario.dart';
+import 'package:portal_corp_v2/screens/perfil/components/usuario.dart';
 import 'package:provider/provider.dart';
 
 

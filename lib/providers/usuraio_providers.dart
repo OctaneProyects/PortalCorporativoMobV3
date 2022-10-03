@@ -26,11 +26,9 @@ class UsuarioProvider with ChangeNotifier {
     final response = usuarioFromJson(resp.body);
     usuario = response;
     notifyListeners();
-    
   }
 
-  postActualizaInfo(int? user1,String? atributo, String? valor) async{
-   
+  postActualizaInfo(int? user1,String? atributo, String? valor) async{ 
     final resp = await http.post(Uri.parse("$urlFinal/api/actualiza/"),body: {
       "Id":user1.toString(),
       "Atributo":atributo,
@@ -47,7 +45,5 @@ class UsuarioProvider with ChangeNotifier {
       "Img":imagen64
     }
     );
-  }
- 
-  
+  } 
 }
