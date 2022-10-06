@@ -5,17 +5,18 @@ import 'package:image_picker/image_picker.dart';
 import '../../../constants.dart';
 import '../perfil.dart';
 
+// ignore: must_be_immutable
 class MyUser extends StatefulWidget {
-  MyUser(
+   MyUser(
       {super.key,
       required this.nombre,
       required this.puesto,
       required this.depto,
-       this.imagen,
+      required this.imagen,
       required this.noemp});
 
   final String nombre, puesto, depto;
-  List<int>? imagen;
+  List<int> imagen;
   final int noemp;
 
   @override
@@ -124,7 +125,7 @@ class _MyUser extends State<MyUser> {
       setState(() {
         //Aqui debe ir el post de la imagen
         List<int> envioImg = File(pickedfile!.path).readAsBytesSync();
-        usuarioProvider!.postActualizaImg(noemp, envioImg);
+        usuario.postActualizaImg(noemp, envioImg);
         widget.imagen = envioImg;
 
         Navigator.of(context).pop();
@@ -136,12 +137,12 @@ class _MyUser extends State<MyUser> {
                 children: const <Widget>[
                   Text(
                     "Cambio de imagen correcto ",
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 14),
                   ),
                   Icon(
                     Icons.check,
                     color: Colors.green,
-                    size: 30,
+                    size: 25,
                   )
                 ],
               ));
@@ -170,10 +171,10 @@ class _MyUser extends State<MyUser> {
               child: Stack(
                 alignment: Alignment.bottomRight,
                 children: <Widget>[
-                  const CircleAvatar(
+                   CircleAvatar(
                     backgroundImage:
-                        //MemoryImage(Uint8List.fromList(widget.imagen)),
-                    NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTUg81xUWPoaVpYNBQQqr5fQOkFUUI1uTkYA&usqp=CAU'),
+                        MemoryImage(Uint8List.fromList(widget.imagen)),
+                    //NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTUg81xUWPoaVpYNBQQqr5fQOkFUUI1uTkYA&usqp=CAU'),
                     radius: 70,
                   ),
                   GestureDetector(

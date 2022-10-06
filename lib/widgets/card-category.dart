@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/rendering/box.dart';
 import '../constants.dart';
 
-
 class CardCategory extends StatelessWidget {
-  const CardCategory(
-      {super.key, this.title = "Card Category",
-      this.img = "https://civideportes.com.co/wp-content/uploads/2019/08/medidas-campo-de-futbol.jpg",
-    });
+  const CardCategory({
+    super.key,
+    this.title = "Card Category",
+    this.img =
+        "https://civideportes.com.co/wp-content/uploads/2019/08/medidas-campo-de-futbol.jpg",
+  });
 
   final String img;
   final String title;
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,8 @@ class CardCategory extends StatelessWidget {
               child: Stack(children: [
                 Container(
                     decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(6.0)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(6.0)),
                         image: DecorationImage(
                           image: NetworkImage(img),
                           fit: BoxFit.cover,
@@ -41,7 +41,8 @@ class CardCategory extends StatelessWidget {
                       style: const TextStyle(
                           color: NowUIColors.white,
                           fontWeight: FontWeight.w600,
-                          fontSize: 18.0)),
+                          fontSize: 18.0,
+                          fontFamily: 'Montserrat')),
                 )
               ])),
         ));

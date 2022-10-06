@@ -2,40 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:portal_corp_v2/widgets/card-category.dart';
 import 'package:portal_corp_v2/widgets/text-notify.dart';
 import 'package:portal_corp_v2/constants.dart';
+import '../../../widgets/form-notify.dart';
 
-import '../../widgets/form-notify.dart';
-import '../perfil/perfil.dart';
+// class DetalleNotify extends StatelessWidget {
+//    const DetalleNotify({super.key, required this.noproveedor,this.aprobacion = true});
 
-class AltaProveedores extends StatelessWidget {
-  const AltaProveedores({super.key, required this.noproveedor});
+//   final int noproveedor;
+//   final bool aprobacion;
+//   // This widget is the root of your application.
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       title: 'Notificaciones',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blueGrey,
+//         visualDensity: VisualDensity.adaptivePlatformDensity,
+//         fontFamily: 'Montserrat',
+//       ),
+//       home:  MyNotify(notify: aprobacion,),
+//     );
+//   }
+// }
 
-  final int noproveedor;
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Notificaciones',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        fontFamily: 'Montserrat',
-      ),
-      home: const MyAltaP(),
-    );
-  }
-}
-
-class MyAltaP extends StatefulWidget {
-  const MyAltaP({super.key, this.notify = true});
+class MyNotify extends StatefulWidget {
+  const MyNotify({super.key, this.notify = true});
 
   final bool notify;
   @override
-  State<MyAltaP> createState() => _MyAltaPState();
+  State<MyNotify> createState() => _MyNotifyState();
 }
 
-class _MyAltaPState extends State<MyAltaP> {
-  late bool notify;
+class _MyNotifyState extends State<MyNotify> {
+  late bool notify = widget.notify;
   //var tiposcampos = ["Departamento","Solicitud de aprobacion","Descripcion","No. Proveedor","Proveedor","RFC"];
   @override
   void initState() {
@@ -50,13 +49,7 @@ class _MyAltaPState extends State<MyAltaP> {
         appBar: AppBar(
           leading: GestureDetector(
               onTap: () {
-                // setState(() {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Perfil(noemp: 952686)));
-
-                // });
+                Navigator.pop(context);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -69,36 +62,37 @@ class _MyAltaPState extends State<MyAltaP> {
               )),
           title: const Text(
             'Notificación',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
           ),
           backgroundColor: NowUIColors.navbarColor,
           foregroundColor: NowUIColors.white,
         ),
         body: ListView(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                OutlinedButton.icon(
-                    onPressed: () {
-                      setState(() {
-                        notify = !notify;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.check_circle,
-                      color: Colors.white,
-                    ),
-                    label: const Text(
-                      "Cambio",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      shape: const StadiumBorder(),
-                      backgroundColor: NowUIColors.success,
-                    )),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   children: [
+            //     OutlinedButton.icon(
+            //         onPressed: () {
+            //           setState(() {
+            //             notify = !notify;
+            //           });
+            //         },
+            //         icon: const Icon(
+            //           Icons.check_circle,
+            //           color: Colors.white,
+            //         ),
+            //         label: const Text(
+            //           "Cambio",
+            //           style: TextStyle(color: Colors.white, fontSize: 20),
+            //         ),
+            //         style: OutlinedButton.styleFrom(
+            //           shape: const StadiumBorder(),
+            //           backgroundColor: NowUIColors.success,
+            //         )),
+            //   ],
+            // ),
             const CardCategory(
               title: 'Detallado de notificación',
               img:

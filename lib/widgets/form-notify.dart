@@ -77,7 +77,27 @@ class _FormNotifyState extends State<FormNotify> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           OutlinedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                          content: Row(
+                        children: const <Widget>[
+                          Text(
+                            "Solicitud Rechazada",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Icon(
+                            Icons.cancel_outlined,
+                            color: NowUIColors.error,
+                            size: 25,
+                          )
+                        ],
+                      ));
+                    }).whenComplete(() => Navigator.pop(context));
+                //Navigator.pop(context);
+              },
               icon: const Icon(
                 Icons.cancel,
                 color: Colors.white,
@@ -92,7 +112,25 @@ class _FormNotifyState extends State<FormNotify> {
               )),
           OutlinedButton.icon(
               onPressed: () {
-                setState(() {});
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                          content: Row(
+                        children: const <Widget>[
+                          Text(
+                            "Solicitud Aprobada",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Icon(
+                            Icons.check_circle_outline,
+                            color: NowUIColors.success,
+                            size: 25,
+                          )
+                        ],
+                      ));
+                    }).whenComplete(() => Navigator.pop(context));
+                //Navigator.pop(context);
               },
               icon: const Icon(
                 Icons.check_circle,

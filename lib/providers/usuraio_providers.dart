@@ -10,13 +10,13 @@ import 'package:http/http.dart' as http;
  const urlapi = url;
 
 class UsuarioProvider with ChangeNotifier {
-  List<Usuario> usuario = [];
+  List<Usuario>usuario = [];
 
-  UsuarioProvider(int noemp){
-    getUsuario(noemp);
+  UsuarioProvider(){
+    //getUsuario(noemp);
   }
 
-  getUsuario(int user) async{
+  Future<List<Usuario>> getUsuario(int user) async{
     //const url1 = 'http://10.0.2.2:8000/api/hola';
     //const url1 = 'http://192.168.18.122:8000/api/perfil';
 
@@ -25,7 +25,7 @@ class UsuarioProvider with ChangeNotifier {
     final resp =  await http.get(Uri.parse("$urlFinal/api/perfil/$user"));
     final response = usuarioFromJson(resp.body);
     usuario = response;
-    notifyListeners();
+    return usuario;
   }
 
   postActualizaInfo(int? user1,String? atributo, String? valor) async{ 
