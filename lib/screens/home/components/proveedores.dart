@@ -83,6 +83,10 @@ class _MyVendorsState extends State<MyVendors> {
                 CardAltaRapida(
                   aprobacion: false,
                 ),
+                CardAltaRapida(),
+                CardAltaRapida(aprobacion: false,),
+
+
               ],
             )
           ],
