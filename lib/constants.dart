@@ -81,4 +81,6 @@ class NowUIColors {
   static const Color socialTwitter = Color.fromRGBO(91, 192, 222, 1.0);
 
   static const Color socialDribbble = Color.fromRGBO(234, 76, 137, 1.0);
+
+  static const Color navbarColor = Color.fromRGBO(0, 125, 136, 1.0);
 }
