@@ -5,10 +5,10 @@ import '../constants.dart';
 
 class CardSquare extends StatelessWidget {
   const CardSquare(
-      {super.key, this.title = "Placeholder Title",
+      {Key? key,  this.title = "Placeholder Title",
       this.cta = "",
       this.img = "https://civideportes.com.co/wp-content/uploads/2019/08/medidas-campo-de-futbol.jpg",
-      this.tap = defaultFunc});
+      this.tap = defaultFunc}) : super(key: key);
 
   final String cta;
   final String img;

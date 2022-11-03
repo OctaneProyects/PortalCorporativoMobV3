@@ -1,4 +1,4 @@
-package com.example.portal_corp_v2
+package com.octanesystems.portalcorporativo
 
 import io.flutter.embedding.android.FlutterActivity
 

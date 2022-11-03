@@ -4,7 +4,7 @@ import '../constants.dart';
 import 'package:flutter/material.dart';
 
 class FormNotify extends StatefulWidget {
-  FormNotify({super.key, this.texto = ""});
+  const FormNotify({ this.texto = ""});
 
   final String texto;
 

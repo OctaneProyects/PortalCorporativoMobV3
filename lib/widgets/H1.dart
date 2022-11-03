@@ -2,10 +2,10 @@ import '../constants.dart';
 import 'package:flutter/material.dart';
 
 class TextH1 extends StatelessWidget {
-  const TextH1({
-    super.key,
+  const TextH1({Key? key, 
+  
     this.texto = "",
-  });
+  }) : super(key: key);
 
   final String texto;
 

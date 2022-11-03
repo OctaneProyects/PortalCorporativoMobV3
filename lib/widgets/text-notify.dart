@@ -2,10 +2,9 @@ import '../constants.dart';
 import 'package:flutter/material.dart';
 
 class TextNotify extends StatelessWidget {
-  const TextNotify({
-    super.key,
+  const TextNotify({Key? key, 
     this.texto = "",
-  });
+  }) : super(key: key);
 
   final String texto;
 

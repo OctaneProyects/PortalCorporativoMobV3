@@ -26,7 +26,7 @@ import '../../../widgets/form-notify.dart';
 // }
 
 class MyNotify extends StatefulWidget {
-  const MyNotify({super.key, this.notify = true});
+   MyNotify({Key? key, this.notify = true}) : super(key: key);
 
   final bool notify;
   @override

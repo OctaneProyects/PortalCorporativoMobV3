@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "176654083227",
+    "project_id": "pruebas-app-movil",
+    "storage_bucket": "pruebas-app-movil.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176654083227:android:48b2098b1feb3839e0123e",
+        "android_client_info": {
+          "package_name": "com.octanesystems.portalcorporativo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "176654083227-agq7m0uf2qudnu5ohvmjslt65m2fd7nn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.octanesystems.portalcorporativo",
+            "certificate_hash": "d8930b8b1db4ac1615bd33165dc7168ea4ab0294"
+          }
+        },
+        {
+          "client_id": "176654083227-0m8jt5brgi7amf01j66h8uackcnhuseu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBqGWDZMym0LucdtUYV74AvETEDhJqD5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "176654083227-0m8jt5brgi7amf01j66h8uackcnhuseu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

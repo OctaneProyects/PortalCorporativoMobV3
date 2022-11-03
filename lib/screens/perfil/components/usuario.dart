@@ -8,12 +8,12 @@ import '../perfil.dart';
 // ignore: must_be_immutable
 class MyUser extends StatefulWidget {
    MyUser(
-      {super.key,
+      {Key? key, 
       required this.nombre,
       required this.puesto,
       required this.depto,
       required this.imagen,
-      required this.noemp});
+      required this.noemp}) : super(key: key);
 
   final String nombre, puesto, depto;
   List<int> imagen;

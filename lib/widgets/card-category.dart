@@ -3,12 +3,11 @@ import 'package:flutter/src/rendering/box.dart';
 import '../constants.dart';
 
 class CardCategory extends StatelessWidget {
-  const CardCategory({
-    super.key,
+  const CardCategory({Key? key, 
     this.title = "Card Category",
     this.img =
         "https://civideportes.com.co/wp-content/uploads/2019/08/medidas-campo-de-futbol.jpg",
-  });
+  }) : super(key: key);
 
   final String img;
   final String title;

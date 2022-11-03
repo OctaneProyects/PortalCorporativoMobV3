@@ -40,7 +40,7 @@ List<int>? ponImagen;
 // }
 
 class MyProfile extends StatefulWidget {
-  const MyProfile({super.key, required this.user});
+  const MyProfile({Key? key,  required this.user}) : super(key: key);
   final int user;
 
   @override
@@ -76,12 +76,12 @@ class _MyProfileState extends State<MyProfile> {
   void getCancel() {
     //ponImagen =  usuarioProvider?.usuario[0].imBlob;
     setState(() {
-      txtMarcaR.text = usuario!.usuario[0].marcaRapida.toString();
-      txtExt.text = usuario!.usuario[0].extension.toString();
-      txtCel.text = usuario!.usuario[0].celPersonal.toString();
-      txtTrabajo.text = usuario!.usuario[0].telTrabajo.toString();
-      txtCasa.text = usuario!.usuario[0].telPersonal.toString();
-      txtEmail.text = usuario!.usuario[0].email.toString();
+      txtMarcaR.text = usuario.usuario[0].marcaRapida.toString();
+      txtExt.text = usuario.usuario[0].extension.toString();
+      txtCel.text = usuario.usuario[0].celPersonal.toString();
+      txtTrabajo.text = usuario.usuario[0].telTrabajo.toString();
+      txtCasa.text = usuario.usuario[0].telPersonal.toString();
+      txtEmail.text = usuario.usuario[0].email.toString();
     });
   }
 

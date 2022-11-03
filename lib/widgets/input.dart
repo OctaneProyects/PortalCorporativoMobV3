@@ -22,7 +22,7 @@ class Input extends StatelessWidget {
   final int maxline;
 
   const Input(
-      {super.key,
+      {Key? key, 
       required this.nametext,
       this.borderColor = NowUIColors.black,
       this.enabled = true,
@@ -32,7 +32,7 @@ class Input extends StatelessWidget {
       this.keyboardType = TextInputType.text,
       this.onEditingComplete,
       this.textInputFormatter,
-      this.maxline = 1});
+      this.maxline = 1}) : super(key: key);
 
   void nada() {}
 

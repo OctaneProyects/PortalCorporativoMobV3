@@ -1,14 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:portal_corp_v2/screens/perfil/perfil.dart';
+import 'package:portal_corp_v2/services/push.notify.dart';
 import 'package:portal_corp_v2/widgets/card-notify.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/usuraio_providers.dart';
 import 'package:portal_corp_v2/constants.dart';
 
-class NotifyCenter extends StatelessWidget {
-  const NotifyCenter({super.key, required this.noemp});
+import '../../services/local_notifu2.dart';
+import 'components/detalle-notidy.dart';
+
+class NotifyCenter extends StatefulWidget {
+  const NotifyCenter({Key? key, required this.noemp}) : super(key: key);
 
   final int noemp;
+
+  @override
+  State<NotifyCenter> createState() => _NotifyCenterState();
+}
+
+class _NotifyCenterState extends State<NotifyCenter> {
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    navigatorKeyGlobal = navigatorKey;
+    contextGlobal = context;
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +39,14 @@ class NotifyCenter extends StatelessWidget {
           primarySwatch: Colors.blueGrey,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: 'Montserrat'),
-      home: MyNotifyCenter(user: noemp),
+      navigatorKey: navigatorKey,
+      home: MyNotifyCenter(user: widget.noemp),
     );
   }
 }
 
 class MyNotifyCenter extends StatefulWidget {
-  const MyNotifyCenter({super.key, required this.user});
+  const MyNotifyCenter({Key? key, required this.user}) : super(key: key);
 
   final int user;
 
@@ -67,17 +88,25 @@ class _MyNotifyCenterState extends State<MyNotifyCenter> {
           children: [
             Column(
               children: const [
-                CardNotify(),
+                CardNotify(id: 'id1',),
                 CardNotify(
                   aprobacion: false,
+                  id: 'id2',
                 ),
-                CardNotify(),
+                CardNotify(id: 'id3',),
                 CardNotify(
                   aprobacion: false,
+                  id: 'id4',
                 ),
               ],
             )
           ],
         ));
   }
+
+  // onNotificationClick(ReviceNotification recievedNotification) {}
+
+  // onNotificationLowerVersion(String? payload) {
+  //   print('payload: $payload');
+  // }
 }
